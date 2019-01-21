@@ -1,0 +1,3 @@
+[submodule "src/tensorrt_base"]
+	path = src/tensorrt_base
+	url = git@github.com:aaronchongth/tensorrt_base.git
