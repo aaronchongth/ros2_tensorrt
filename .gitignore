@@ -1,0 +1,15 @@
+# build stuff
+bin/*
+cmake/*
+build_files/*
+
+# dependencies
+deps/*
+3rd_party/*
+major_deps/*
+
+# testing or other data
+data/*
+
+# other random stuff
+.vscode
