@@ -3,7 +3,6 @@ project(test_libs C CXX)
 
 set(SOURCES
     main.cpp
-    ros2_tensorrt.cpp
 )
 
 set(PRIVATE_LIBRARIES
@@ -20,6 +19,7 @@ set(PRIVATE_INCLUDES ${rclcpp_INCLUDE_DIRS} ${PRIVATE_INCLUDES})
 set(PRIVATE_INCLUDES ${std_msgs_INCLUDE_DIRS} ${PRIVATE_INCLUDES})
 set(PRIVATE_INCLUDES ${sensor_msgs_INCLUDE_DIRS} ${PRIVATE_INCLUDES})
 set(PRIVATE_INCLUDES ${TENSORRT_BASE_DIR} ${PRIVATE_INCLUDES})
+set(PRIVATE_INCLUDES ${ROS2_BASE_DIR} ${PRIVATE_INCLUDES})
 
 #-------------------------------------------------------------------------------
 # Libraries
@@ -30,6 +30,7 @@ set(PRIVATE_LIBRARIES ${rclcpp_LIBRARIES} ${PRIVATE_LIBRARIES})
 set(PRIVATE_LIBRARIES ${std_msgs_LIBRARIES} ${PRIVATE_LIBRARIES})
 set(PRIVATE_LIBRARIES ${sensor_msgs_LIBRARIES} ${PRIVATE_LIBRARIES})
 set(PRIVATE_LIBRARIES tensorrt_base_static ${PRIVATE_LIBRARIES})
+set(PRIVATE_LIBRARIES ros2_base_static ${PRIVATE_LIBRARIES})
 
 #-------------------------------------------------------------------------------
 # Final target

@@ -64,6 +64,8 @@ set(cxxopts_INCLUDE_DIRS "${CMAKE_SOURCE_DIR}/3rdparty/cxxopts/include")
 #-------------------------------------------------------------------------------
 set(TENSORRT_BASE_DIR "${CMAKE_SOURCE_DIR}/src/tensorrt_base")
 add_subdirectory(${TENSORRT_BASE_DIR})
+set(ROS2_BASE_DIR "${CMAKE_SOURCE_DIR}/src/ros2_base")
+add_subdirectory(${ROS2_BASE_DIR})
 
 #-------------------------------------------------------------------------------
 # Individual driver targets

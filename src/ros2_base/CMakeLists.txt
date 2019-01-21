@@ -2,7 +2,7 @@
 project(ros2_base C CXX)
 
 set(SOURCES
-    main.cpp
+    ros2_tensorrt.cpp
 )
 
 set(PRIVATE_LIBRARIES
@@ -31,9 +31,9 @@ set(PRIVATE_LIBRARIES ${sensor_msgs_LIBRARIES} ${PRIVATE_LIBRARIES})
 set(PRIVATE_LIBRARIES tensorrt_base_static ${PRIVATE_LIBRARIES})
 
 #-------------------------------------------------------------------------------
-# Final target
+# Final target as library
 #-------------------------------------------------------------------------------
-add_executable(${PROJECT_NAME} ${SOURCES})
+add_library(${PROJECT_NAME} ${SOURCES})
 target_link_libraries(${PROJECT_NAME}
                       PRIVATE
                       ${PRIVATE_LIBRARIES})
@@ -41,3 +41,10 @@ target_include_directories(${PROJECT_NAME}
                            PRIVATE
                            ${PRIVATE_INCLUDES})
 
+add_library("${PROJECT_NAME}_static" STATIC ${SOURCES})
+target_link_libraries("${PROJECT_NAME}_static"
+                      PUBLIC
+                      ${PRIVATE_LIBRARIES})
+target_include_directories("${PROJECT_NAME}_static"
+                           PUBLIC
+                           ${PRIVATE_INCLUDES})
