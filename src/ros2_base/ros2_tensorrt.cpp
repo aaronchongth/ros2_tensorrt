@@ -6,12 +6,11 @@ Ros2TensorrtModule::Ros2TensorrtModule(const ros2trt_config &config)
       model_path_(config.model_path),
       batch_size_(config.batch_size),
       max_workspace_(config.max_workspace) {
-  // if (strcmp(tensorrt_common::getFileType(model_path_).c_str(), "onnx") == 0)
-  //   tensorrt_module_ = std::make_unique<TensorRTModule>(
-  //       new TensorRTModule(model_path_, batch_size_, max_workspace_));
-  // else
-  //   tensorrt_module_ = std::make_unique<TensorRTModule>(model_path_));
-  tensorrt_module_ = std::make_unique<TensorRTModule>(model_path_);
+  if (strcmp(tensorrt_common::getFileType(model_path_).c_str(), "onnx") == 0)
+    tensorrt_module_ = std::make_unique<TensorRTModule>(
+        model_path_, batch_size_, max_workspace_);
+  else
+    tensorrt_module_ = std::make_unique<TensorRTModule>(model_path_);
 
   std::cout << "<STATUS> ROS2 TensorRT Module initialized, ready for callback "
                "inference."

@@ -79,7 +79,7 @@ int main(int argc, char **argv) {
   ros2trt_config config;
   config.node_name = "test_node";
   config.sub_topic = "test_topic";
-  config.model_path = "/home/aaron/Data/engines/resnet50v1.engine";
+  config.model_path = "/home/aaron/Data/onnx_models/mobilenetv2-1.0.onnx";
 
   rclcpp::spin(std::make_shared<Ros2TensorrtModule>(config));
   rclcpp::shutdown();
