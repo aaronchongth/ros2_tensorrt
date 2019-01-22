@@ -57,7 +57,7 @@ set(eigen_INCLUDE_DIRS "${CMAKE_SOURCE_DIR}/3rd_party/eigen")
 #-------------------------------------------------------------------------------
 # cxxopts
 #-------------------------------------------------------------------------------
-set(cxxopts_INCLUDE_DIRS "${CMAKE_SOURCE_DIR}/3rdparty/cxxopts/include")
+set(cxxopts_INCLUDE_DIRS "${CMAKE_SOURCE_DIR}/3rd_party/cxxopts/include")
 
 #-------------------------------------------------------------------------------
 # Library targets

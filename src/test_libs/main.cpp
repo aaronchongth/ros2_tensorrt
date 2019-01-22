@@ -94,6 +94,42 @@ int main(int argc, char **argv) {
   // max_workspace_size);
   // // trt_module.save_engine(engine_path);
 
+  // // prepare data
+  // cv::Mat img =
+  //     cv::imread("/home/aaron/projects/ros2_tensorrt/data/cat_224.jpg",
+  //                CV_LOAD_IMAGE_COLOR);
+  // cv::Mat float_mat;
+  // img.convertTo(float_mat, CV_32FC3, 1.0 / 255.0);
+  // cv::Mat resized_mat;
+  // cv::resize(float_mat, resized_mat, cv::Size(224, 224), 0, 0,
+  //            cv::INTER_LINEAR);
+
+  // // splitting into BGR channels, then normalize
+  // std::vector<cv::Mat> channels;
+  // cv::split(resized_mat, channels);
+  // // channels[0] = channels[0] - BLUE_CHANNEL_MEAN;
+  // // channels[0] = channels[0] / BLUE_CHANNEL_STD;
+  // // channels[1] = channels[1] - GREEN_CHANNEL_MEAN;
+  // // channels[1] = channels[1] / GREEN_CHANNEL_STD;
+  // // channels[2] = channels[2] - RED_CHANNEL_MEAN;
+  // // channels[2] = channels[2] / RED_CHANNEL_STD;
+
+  // // vectorize
+  // cv::Mat vect_mat;
+  // vect_mat.push_back(channels[2]);
+  // vect_mat.push_back(channels[1]);
+  // vect_mat.push_back(channels[0]);
+  // vect_mat = vect_mat.reshape(1, 1);
+
+  // std::vector<float> tmp_input;
+  // tmp_input.assign((float *)vect_mat.datastart, (float *)vect_mat.dataend);
+
+  // // cv::Mat test_img;
+
+  // // prepare dummy data
+  // std::vector<std::vector<float>> dummy_input;
+  // dummy_input.push_back(tmp_input);
+
   // // prepare dummy data
   // std::vector<std::vector<float>> dummy_input;
   // int n_inputs = trt_module.get_n_inputs();
