@@ -1,10 +1,10 @@
-# Open Source TensorRT Wrapper
+# Open Source TensorRT Wrapper - ROS2
 
 ## Information
 
 This repository is meant for inferencing neural networks in [ONNX](https://onnx.ai) format using the optimized [TensorRT](https://developer.nvidia.com/tensorrt) framework by NVIDIA, in as clean and as stand-alone format as possible, much like any other ROS package projects.
 
-The general usage would be to build a TensorRT Engine from a pretrained ONNX model, using **onnx2tensorrt**, while subscribing to input, inferencing and publishing results would be handled by **ros2tensorrt**. 
+The general usage would be to build a TensorRT Engine from a pretrained ONNX model, using **onnx2tensorrt**, while subscribing to input, inferencing and publishing results would be handled by **ros2inference**. 
 
 ### Notes
 
@@ -41,7 +41,7 @@ git clone --recursive https://github.com/aaronchongth/ros2_tensorrt.git
 
 ## Usage
 ```
-
+./bin/
 ```
 
 ## Cleaning, rebuilding
