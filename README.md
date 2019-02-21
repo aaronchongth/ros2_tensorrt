@@ -29,9 +29,15 @@ The general usage would be to build a TensorRT Engine from a pretrained ONNX mod
 
 ## Third-party Prerequisites (installation difficulty):
 
-- TensorRT (easy)
-- CUDA (medium)
+- CUDA (medium, remember to add path to system **PATH** and **LD_LIBRARY_PATH**!)
 - ROS2 (medium)
+- TensorRT (easy)
+
+Add a path for TensorRT at the bottom of `$HOME/.bashrc`, for example
+```
+export TENSORRT_DIR=$HOME/tools/TensorRT-5.0.2.6
+```
+this path will be used in building and linking the project.
 
 ## Building
 
@@ -98,3 +104,6 @@ The 3rd terminal outputs should determine whether the test passes.
 - [TensorRT](https://developer.nvidia.com/tensorrt)
 - [OpenCV](https://github.com/opencv/opencv)
 - [ROS2](https://index.ros.org/doc/ros2/)
+
+## License
+MIT
