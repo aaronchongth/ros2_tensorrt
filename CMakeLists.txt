@@ -50,11 +50,6 @@ set(OpenCV_BUILD_DIR "${CMAKE_SOURCE_DIR}/deps/opencv/build")
 find_package(OpenCV 3.4.0 REQUIRED HINTS ${OpenCV_BUILD_DIR})
 
 #-------------------------------------------------------------------------------
-# Eigen
-#-------------------------------------------------------------------------------
-set(eigen_INCLUDE_DIRS "${CMAKE_SOURCE_DIR}/3rd_party/eigen")
-
-#-------------------------------------------------------------------------------
 # cxxopts
 #-------------------------------------------------------------------------------
 set(cxxopts_INCLUDE_DIRS "${CMAKE_SOURCE_DIR}/3rd_party/cxxopts/include")

@@ -14,10 +14,12 @@ The general usage would be to build a TensorRT Engine from a pretrained ONNX mod
 - [OpenCV](https://github.com/opencv/opencv) is used for encoding and decoding JPGs, which is currently only used certain parts of the tests, but will be used more in the future when full computer-vision-only-features are added. It is statically linked so it wont mess with your own machine's build. 
 - The project uses [std_msgs/Float32MultiArray](http://docs.ros.org/melodic/api/std_msgs/html/msg/Float32MultiArray.html) message types instead of [sensor_msgs/CompressedImage](http://docs.ros.org/melodic/api/sensor_msgs/html/msg/CompressedImage.html) to allow generality, so it can be used in audio or text applications as well, with minor complexity drawbacks.
 - Take note on how the float arrays are created, especially when using images, for example JPGs decoded by OpenCV will be BGR instead of RGB, while there may be additional normalization techniques for inferencing, such an example is shown in the image publishing testing projects **src/tests/test_publisher.hpp**.
-- Please note that this project will not work on **ARM** architecture devices (NVIDIA Jetsons, Xaviers), but should work seamlessly with **x86** architectures, due to cross-compilation issues (future work).
+- Make sure to properly resize, crop or normalize your data before passing to this project for inference, otherwise your results might be undefined, check out the example below and the code on how I normalized the data and shuffled the channels appropriately based on Imagenet training.
+- Please note that this project will not work on **ARM** architecture devices (NVIDIA Jetsons, Xaviers), but should work seamlessly with **x86** architectures (Desktops, Laptops, MiniPCs), due to the need for cross-compilation (future work).
 
 ## Tested and rolling with:
 
+- C++ 14
 - Cmake 3.10.2
 - gcc 7.3.0
 - TensorRT 5.0.2.6
@@ -31,24 +33,46 @@ The general usage would be to build a TensorRT Engine from a pretrained ONNX mod
 - CUDA (medium)
 - ROS2 (medium)
 
-## Building, flags needed
+## Building
 
 ```
 git clone --recursive https://github.com/aaronchongth/ros2_tensorrt.git
+./install_reqs
 ./build_deps
-./build -DTENSORRT_DIR [***]
+./build -DTENSORRT_DIR [path_to_tensorrt_dir]
 ```
 
 ## Usage
+
 ```
-./bin/
+./bin/ros2inference --node-name [node_name_here] --sub-topic [array_topic_here] --pub-topic [output_topic_here] --model-path [ONNX_or_engine_model_path_here]
 ```
+
+## Example
+This example will validate whether the installations and inferences are correct, in 3 separate terminals, it publishes the CompressedImage and Float32MultiArray message type of a cat image, found in **data/cat_224.jpg**, inferences it through an Imagenet Pretrained Resnet50v1 model, which should have a prediction of a Tabby cat, index 281.
+
+Terminal 1 - Handles the cat image, normalizes it, shuffles the channels properly and publishes Float32MultiArray as well as CompressedImage.
+```
+./bin/test_publisher --array-topic array_topic
+```
+
+Terminal 2 - Inferences array data and publishes raw output from neural network.
+```
+./bin/ros2inference --sub-topic array_topic --pub-topic output_topic
+```
+
+Terminal 3 - Subscribes to raw output and performs an argmax to get the prediction index.
+```
+./bin/test_subscriber --sub-topic output_topic
+```
+
+The 3rd terminal outputs should determine whether the test passes.
 
 ## Cleaning, rebuilding
 
 ```
 ./clean
-./build -DTENSORRT_DIR [***]
+./build -DTENSORRT_DIR [path_to_tensorrt_dir]
 ```
 
 ## Cleaning all, including built dependencies, rebuilding
@@ -56,29 +80,10 @@ git clone --recursive https://github.com/aaronchongth/ros2_tensorrt.git
 ```
 ./clean_deps
 ./build_deps
-./build -DTENSORRT_DIR [***]
-```
-
-## Example
-This example will validate whether the installations and inferences are correct, in 3 separate terminals,
-
-Terminal 1
-```
-./bin/image_publisher
-```
-
-Terminal 2
-```
-./bin/test_libs
-```
-
-Terminal 3
-```
-./bin/test_subscriber
+./build -DTENSORRT_DIR [path_to_tensorrt_dir]
 ```
 
 ## To do:
-- refactor all tests into a single project
 - bash script for tests
 - use json executables
 - handle script for downloading example onnx model
@@ -89,3 +94,7 @@ Terminal 3
 
 ## Credits
 - Models from examples and tests used are from [pretrained models](https://github.com/Cadene/pretrained-models.pytorch)
+- [ONNX](https://onnx.ai)
+- [TensorRT](https://developer.nvidia.com/tensorrt)
+- [OpenCV](https://github.com/opencv/opencv)
+- [ROS2](https://index.ros.org/doc/ros2/)
