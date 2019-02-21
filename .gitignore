@@ -9,7 +9,8 @@ deps/*
 major_deps/*
 
 # testing or other data
-data/*
+# I want to keep the cat images for testing
+# data/*
 
 # other random stuff
 .vscode
