@@ -70,6 +70,6 @@ add_subdirectory(${ROS2_BASE_DIR})
 #-------------------------------------------------------------------------------
 # Individual driver targets
 #-------------------------------------------------------------------------------
-set(IMAGE_PUBLISHER "${CMAKE_SOURCE_DIR}/src/image_publisher")
-add_subdirectory(src/image_publisher)
-add_subdirectory(src/test_libs)
+set(ROS2_INFERENCE "${CMAKE_SOURCE_DIR}/src/ros2_inference")
+add_subdirectory(${ROS2_INFERENCE})
+add_subdirectory(src/tests)

@@ -44,40 +44,30 @@ TODO:
 - check out the quality of service aspect too
 */
 
-struct ros2trt_config {
-  bool handle_images;
-  bool normalize_images;
-  bool bgr_images;
-
+struct Ros2TensorrtModuleConfig {
   // ros2 items
-  std::string node_name;
-  std::string sub_topic;
-  std::string pub_topic;
+  std::string node_name = "ros2inference";
+  std::string sub_topic = "sub_topic";
+  std::string pub_topic = "pub_topic";
 
   // tensorrt items
-  std::string model_path;
+  std::string model_path = "model_path";
   int batch_size = 1;
   int max_workspace = 1 << 21;
 };
 
 class Ros2TensorrtModule : public rclcpp::Node {
  public:
-  explicit Ros2TensorrtModule(const ros2trt_config &config);
+  explicit Ros2TensorrtModule(const Ros2TensorrtModuleConfig &config);
   ~Ros2TensorrtModule();
 
  private:
   // ROS2 items
-  bool handle_images_, normalize_images_, bgr_images_;
   std::string node_name_, sub_topic_, pub_topic_;
-
-  rclcpp::Subscription<sensor_msgs::msg::CompressedImage>::SharedPtr
-      jpg_subscriber_;
-  void image_callback(const sensor_msgs::msg::CompressedImage::SharedPtr msg);
 
   rclcpp::Subscription<std_msgs::msg::Float32MultiArray>::SharedPtr
       array_subscriber_;
   void array_callback(const std_msgs::msg::Float32MultiArray::SharedPtr msg);
-
   rclcpp::Publisher<std_msgs::msg::Float32MultiArray>::SharedPtr
       array_publisher_;
 

@@ -1,7 +1,7 @@
-#include "image_publisher.hpp"
+#include "test_publisher.hpp"
 
-ImagePublisherConfig collect_config(const opt::ParseResult &args) {
-  ImagePublisherConfig config;
+TestPublisherConfig collect_config(const opt::ParseResult &args) {
+  TestPublisherConfig config;
   config.image_path = std::string(args["image-path"].as<std::string>());
   config.node_name = std::string(args["node-name"].as<std::string>());
   config.jpg_topic = std::string(args["jpg-topic"].as<std::string>());
@@ -14,10 +14,10 @@ int main(int argc, char **argv) {
   rclcpp::init(argc, argv);
 
   // Get the config parameters
-  ImagePublisherConfig config;
-  opt::Options options(
-      "image_publisher",
-      "Publishes an image in CompressedImage and Float32MultiArray formats.");
+  TestPublisherConfig config;
+  opt::Options options("test_publisher",
+                       "Publishes a test image in CompressedImage and "
+                       "Float32MultiArray formats.");
   options.add_options()(
       "image-path", "Path to image",
       opt::value<std::string>()->default_value(config.image_path))(
@@ -36,8 +36,8 @@ int main(int argc, char **argv) {
     if (args["help"].as<std::string>() == "true")
       help = true;
     else {
-      ImagePublisherConfig init_config = collect_config(args);
-      rclcpp::spin(std::make_shared<ImagePublisher>(init_config));
+      TestPublisherConfig init_config = collect_config(args);
+      rclcpp::spin(std::make_shared<TestPublisher>(init_config));
       rclcpp::shutdown();
     }
   } catch (const opt::OptionException &e) {
@@ -50,6 +50,6 @@ int main(int argc, char **argv) {
     return 0;
   }
 
-  std::cout << "<STATUS> Image publisher done." << std::endl;
+  std::cout << "<STATUS> Test publisher done." << std::endl;
   return 0;
 }

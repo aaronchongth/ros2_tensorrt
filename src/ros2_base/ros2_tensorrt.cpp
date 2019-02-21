@@ -1,10 +1,7 @@
 #include "ros2_tensorrt.hpp"
 
-Ros2TensorrtModule::Ros2TensorrtModule(const ros2trt_config &config)
+Ros2TensorrtModule::Ros2TensorrtModule(const Ros2TensorrtModuleConfig &config)
     : Node(config.node_name),
-      handle_images_(config.handle_images),
-      normalize_images_(config.normalize_images),
-      bgr_images_(config.bgr_images),
       sub_topic_(config.sub_topic),
       pub_topic_(config.pub_topic),
       model_path_(config.model_path),
@@ -36,16 +33,9 @@ Ros2TensorrtModule::Ros2TensorrtModule(const ros2trt_config &config)
         "<ERROR> TensorRT Module input dimensions inappropriate.");
 
   // handle the ROS2 items
-  if (handle_images_)
-    jpg_subscriber_ =
-        this->create_subscription<sensor_msgs::msg::CompressedImage>(
-            sub_topic_,
-            std::bind(&Ros2TensorrtModule::image_callback, this, _1));
-  else
-    array_subscriber_ =
-        this->create_subscription<std_msgs::msg::Float32MultiArray>(
-            sub_topic_,
-            std::bind(&Ros2TensorrtModule::array_callback, this, _1));
+  array_subscriber_ =
+      this->create_subscription<std_msgs::msg::Float32MultiArray>(
+          sub_topic_, std::bind(&Ros2TensorrtModule::array_callback, this, _1));
   array_publisher_ =
       this->create_publisher<std_msgs::msg::Float32MultiArray>(pub_topic_);
 
@@ -105,29 +95,6 @@ void Ros2TensorrtModule::array_callback(
 
   // For rate keeping
   n_messages_++;
-}
-
-void Ros2TensorrtModule::image_callback(
-    const sensor_msgs::msg::CompressedImage::SharedPtr msg) {
-  // cv::Mat input_image = cv::decode();
-
-  // // safety for input sizes
-  // auto input_dims = tensorrt_module_->get_input_dimensions(0);
-  // int n_dims = 0;
-  // uint32_t n_elems = 1;
-  // for (auto dimension : msg->layout.dim) {
-  //   if (dimension.size != input_dims.d[n_dims])
-  //     throw std::runtime_error(
-  //         "<ERROR> Incoming data dimension inconsistent with TensorRT
-  //         Module.");
-  //   n_elems *= dimension.size;
-  //   n_dims++;
-  // }
-  // if (input_dims.nbDims != n_dims)
-  //   throw std::runtime_error(
-  //       "<ERROR> Incoming data incorrect number of dimensions");
-
-  std::cout << "<STATUS> Image callback inference called." << std::endl;
 }
 
 void Ros2TensorrtModule::info_timer_callback() {

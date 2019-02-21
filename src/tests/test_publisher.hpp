@@ -28,16 +28,16 @@ namespace opt = cxxopts;
 #define BLUE_CHANNEL_MEAN 0.406
 #define BLUE_CHANNEL_STD 0.225
 
-struct ImagePublisherConfig {
+struct TestPublisherConfig {
   std::string image_path = "data/cat_224.jpg";
-  std::string node_name = "cat_pub";
+  std::string node_name = "test_cat_image_node";
   std::string jpg_topic = "jpg_topic";
   std::string array_topic = "array_topic";
 };
 
-class ImagePublisher : public rclcpp::Node {
+class TestPublisher : public rclcpp::Node {
  public:
-  explicit ImagePublisher(const ImagePublisherConfig &config)
+  explicit TestPublisher(const TestPublisherConfig &config)
       : Node(config.node_name),
         image_path_(config.image_path),
         jpg_topic_(config.jpg_topic),
@@ -48,7 +48,7 @@ class ImagePublisher : public rclcpp::Node {
     array_publisher_ =
         this->create_publisher<std_msgs::msg::Float32MultiArray>(array_topic_);
     timer_ = this->create_wall_timer(
-        25ms, std::bind(&ImagePublisher::timer_callback, this));
+        25ms, std::bind(&TestPublisher::timer_callback, this));
 
     // preparing the image for publishing
     cv::Mat img = cv::imread(image_path_);
@@ -95,7 +95,7 @@ class ImagePublisher : public rclcpp::Node {
     std::cout << "<STATUS> Image publisher initialized." << std::endl;
   }
 
-  ~ImagePublisher() {
+  ~TestPublisher() {
     std::cout << "<STATUS> Image publisher exited cleanly." << std::endl;
   }
 
@@ -138,8 +138,8 @@ class ImagePublisher : public rclcpp::Node {
     array_publisher_->publish(array_msg_);
 
     if (seq_num_ % 40 == 0)
-      std::cout << "<STATUS> Publishing: Float32MultiArray "
-                   "message at 25.00 Hz."
+      std::cout << "<STATUS> Publishing: CompressedImage and Float32MultiArray "
+                   "messages at: 25.00 Hz."
                 << std::endl;
   }
 };

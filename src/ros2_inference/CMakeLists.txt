@@ -1,5 +1,5 @@
 #-------------------------------------------------------------------------------
-project(test_libs C CXX)
+project(ros2inference C CXX)
 
 set(SOURCES
     main.cpp
@@ -20,7 +20,6 @@ set(PRIVATE_INCLUDES ${std_msgs_INCLUDE_DIRS} ${PRIVATE_INCLUDES})
 set(PRIVATE_INCLUDES ${sensor_msgs_INCLUDE_DIRS} ${PRIVATE_INCLUDES})
 set(PRIVATE_INCLUDES ${TENSORRT_BASE_DIR} ${PRIVATE_INCLUDES})
 set(PRIVATE_INCLUDES ${ROS2_BASE_DIR} ${PRIVATE_INCLUDES})
-set(PRIVATE_INCLUDES ${IMAGE_PUBLISHER} ${PRIVATE_INCLUDES})
 
 #-------------------------------------------------------------------------------
 # Libraries
@@ -43,21 +42,3 @@ target_link_libraries(${PROJECT_NAME}
 target_include_directories(${PROJECT_NAME}
                            PRIVATE
                            ${PRIVATE_INCLUDES})
-
-#-------------------------------------------------------------------------------
-# Testing Subscriber Module
-#-------------------------------------------------------------------------------
-project(test_subscriber C CXX)
-
-set(SOURCES
-    test_subscriber.cpp
-)
-
-add_executable(${PROJECT_NAME} ${SOURCES})
-target_link_libraries(${PROJECT_NAME}
-                      PRIVATE
-                      ${PRIVATE_LIBRARIES})
-target_include_directories(${PROJECT_NAME}
-                           PRIVATE
-                           ${PRIVATE_INCLUDES})
-
