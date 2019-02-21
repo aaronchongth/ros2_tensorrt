@@ -19,7 +19,7 @@ The general usage would be to build a TensorRT Engine from a pretrained ONNX mod
 
 ## Tested and rolling with:
 
-- C++ 14
+- C++ 17
 - Cmake 3.10.2
 - gcc 7.3.0
 - TensorRT 5.0.2.6
@@ -45,7 +45,7 @@ this path will be used in building and linking the project.
 git clone --recursive https://github.com/aaronchongth/ros2_tensorrt.git
 ./install_reqs
 ./build_deps
-./build -DTENSORRT_DIR [path_to_tensorrt_dir]
+./build
 ```
 
 ## Usage
@@ -57,6 +57,12 @@ git clone --recursive https://github.com/aaronchongth/ros2_tensorrt.git
 ## Example
 This example will validate whether the installations and inferences are correct, in 3 separate terminals, it publishes the CompressedImage and Float32MultiArray message type of a cat image, found in **data/cat_224.jpg**, inferences it through an Imagenet Pretrained Resnet50v1 model, which should have a prediction of a Tabby cat, index 281.
 
+Download the Imagenet pretrained ONNX model, build the TensorRT engine,
+```
+wget https://s3.amazonaws.com/onnx-model-zoo/resnet/resnet50v1/resnet50v1.onnx -P data
+./bin/onnx2tensorrt --model-path data/resnet50v1.onnx --output-path data/resnet50v1.engine
+```
+
 Terminal 1 - Handles the cat image, normalizes it, shuffles the channels properly and publishes Float32MultiArray as well as CompressedImage.
 ```
 ./bin/test_publisher --array-topic array_topic
@@ -64,7 +70,7 @@ Terminal 1 - Handles the cat image, normalizes it, shuffles the channels properl
 
 Terminal 2 - Inferences array data and publishes raw output from neural network.
 ```
-./bin/ros2inference --sub-topic array_topic --pub-topic output_topic
+./bin/ros2inference --sub-topic array_topic --pub-topic output_topic --model-path data/resnet50v1.engine
 ```
 
 Terminal 3 - Subscribes to raw output and performs an argmax to get the prediction index.
@@ -72,13 +78,11 @@ Terminal 3 - Subscribes to raw output and performs an argmax to get the predicti
 ./bin/test_subscriber --sub-topic output_topic
 ```
 
-The 3rd terminal outputs should determine whether the test passes.
-
 ## Cleaning, rebuilding
 
 ```
 ./clean
-./build -DTENSORRT_DIR [path_to_tensorrt_dir]
+./build
 ```
 
 ## Cleaning all, including built dependencies, rebuilding
@@ -86,7 +90,7 @@ The 3rd terminal outputs should determine whether the test passes.
 ```
 ./clean_deps
 ./build_deps
-./build -DTENSORRT_DIR [path_to_tensorrt_dir]
+./build
 ```
 
 ## To do:
@@ -99,7 +103,7 @@ The 3rd terminal outputs should determine whether the test passes.
 - ROS version of this!
 
 ## Credits
-- Models from examples and tests used are from [pretrained models](https://github.com/Cadene/pretrained-models.pytorch)
+- Models from examples and tests used are from [pretrained models](https://github.com/onnx/models/tree/master/models/image_classification/resnet)
 - [ONNX](https://onnx.ai)
 - [TensorRT](https://developer.nvidia.com/tensorrt)
 - [OpenCV](https://github.com/opencv/opencv)

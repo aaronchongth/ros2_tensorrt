@@ -9,8 +9,8 @@ deps/*
 major_deps/*
 
 # testing or other data
-# I want to keep the cat images for testing
-# data/*
+data/*.onnx
+data/*.engine
 
 # other random stuff
 .vscode

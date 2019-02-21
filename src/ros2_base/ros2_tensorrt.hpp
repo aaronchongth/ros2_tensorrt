@@ -24,11 +24,6 @@ using namespace std::chrono_literals;
 
 /*
 ROS2 TensorRT Module
-- initializes and builds a TensorRT engine for inference
-- subscribes to a Float32MultiArray topic, inferences directly, and publishes
-inference results
-- Runs everything using just a config that can be filled up
-
 Notes:
 - sticks to fp32 (experiments show fp16 doesnt speed things up)
 - sticks to batch size of 1, and optimization workspace of 1 << 21, unless
