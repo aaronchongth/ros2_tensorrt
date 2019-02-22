@@ -1,10 +1,21 @@
-# Open Source TensorRT Wrapper - ROS2
+# ROS2 TensorRT Wrapper
 
 ## Information
 
 This repository is meant for inferencing neural networks in [ONNX](https://onnx.ai) format using the optimized [TensorRT](https://developer.nvidia.com/tensorrt) framework by NVIDIA, in as clean and as stand-alone format as possible, much like any other ROS package projects.
 
 The general usage would be to build a TensorRT Engine from a pretrained ONNX model, using **onnx2tensorrt**, while subscribing to input, inferencing and publishing results would be handled by **ros2inference**. 
+
+### Benchmarks
+
+In my past experience, performance boost from TensorRT optimization becomes increasingly obvious as the number of parameters and operations of the model goes up. Here are some comparisons between different aspects of inference performances on my personal machine which has a GTX1050TI, using the latest Pytorch, on the same pretrained ResNet-50 model.  (Code under tests)
+
+Averaging on 1000 iterations after warmup on the GPU, ResNet-50,  
+
+| Framework    | GPU Memory  | Infernence Frequency |
+| ------------ | ----------- | -------------------- |
+| Pytorch      | 718 Mb      | 105.33 Hz            |
+| **TensorRT** | **358 Mb**  | **197.55 Hz**        |
 
 ### Notes
 

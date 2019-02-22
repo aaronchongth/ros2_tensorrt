@@ -54,3 +54,20 @@ target_link_libraries(${PROJECT_NAME}
 target_include_directories(${PROJECT_NAME}
                            PRIVATE
                            ${PRIVATE_INCLUDES})
+
+#-------------------------------------------------------------------------------
+# Benchmarking Module
+#-------------------------------------------------------------------------------
+project(inference_benchmark C CXX)
+
+set(SOURCES
+    inference_benchmark.cpp
+)
+
+add_executable(${PROJECT_NAME} ${SOURCES})
+target_link_libraries(${PROJECT_NAME}
+                      PRIVATE
+                      ${PRIVATE_LIBRARIES})
+target_include_directories(${PROJECT_NAME}
+                           PRIVATE
+                           ${PRIVATE_INCLUDES})
