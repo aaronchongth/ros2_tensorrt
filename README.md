@@ -6,13 +6,15 @@ This repository is meant for inferencing neural networks in [ONNX](https://onnx.
 
 The general usage would be to build a TensorRT Engine from a pretrained ONNX model, using **onnx2tensorrt**, while subscribing to input, inferencing and publishing results would be handled by **ros2inference**. 
 
+**IMPORTANT**: TensorRT engines are optimized specifically to the device it is built on, therefore an engine built on your machine will not work on your robot running a Jetson. You will have to build to engine on the Jetson and use it.
+
 ### Benchmarks
 
 In my past experience, performance boost from TensorRT optimization becomes increasingly obvious as the number of parameters and operations of the model goes up. Here are some comparisons between different aspects of inference performances on my personal machine which has a GTX1050TI, using the latest Pytorch, on the same pretrained ResNet-50 model.  (Code under tests)
 
 Averaging on 1000 iterations after warmup on the GPU, ResNet-50,  
 
-| Framework    | GPU Memory  | Infernence Frequency |
+| Framework    | GPU Memory  | Inference Frequency |
 | ------------ | ----------- | -------------------- |
 | Pytorch      | 718 Mb      | 105.33 Hz            |
 | **TensorRT** | **358 Mb**  | **197.55 Hz**        |
