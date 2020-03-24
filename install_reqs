@@ -1,3 +1,0 @@
-#!/bin/sh
-
-./scripts/install_reqs.bash

@@ -1,0 +1,44 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/aaron/projects/ros2_tensorrt/onnx_to_trt/src/OnnxToTrt.cpp
+iostream
+-
+memory
+-
+NvInfer.h
+-
+NvOnnxParser.h
+-
+
+/home/aaron/tools/TensorRT-7.0.0.11/include/NvInfer.h
+NvInferRuntime.h
+/home/aaron/tools/TensorRT-7.0.0.11/include/NvInferRuntime.h
+
+/home/aaron/tools/TensorRT-7.0.0.11/include/NvInferRuntime.h
+NvInferRuntimeCommon.h
+/home/aaron/tools/TensorRT-7.0.0.11/include/NvInferRuntimeCommon.h
+
+/home/aaron/tools/TensorRT-7.0.0.11/include/NvInferRuntimeCommon.h
+cstddef
+-
+cstdint
+-
+NvInferVersion.h
+/home/aaron/tools/TensorRT-7.0.0.11/include/NvInferVersion.h
+
+/home/aaron/tools/TensorRT-7.0.0.11/include/NvInferVersion.h
+
+/home/aaron/tools/TensorRT-7.0.0.11/include/NvOnnxParser.h
+NvInfer.h
+/home/aaron/tools/TensorRT-7.0.0.11/include/NvInfer.h
+stddef.h
+-
+vector
+-
+
